@@ -6,6 +6,7 @@ defmodule Issues.CLI do
     argv
     |> parse_args
     |> process
+    |> Issues.Printer.print
   end
 
   @doc """
@@ -33,7 +34,14 @@ defmodule Issues.CLI do
   end
 
   def process({user, project, count}) do
-    Issues.Github.fetch(user, project, count)
+    Issues.Github.fetch(user, project)
+    |> sort_by_asc
+    |> Enum.take(count)
+  end
+
+  def sort_by_asc(issues_list) do
+    issues_list
+    |> Enum.sort(fn(i1, i2) -> Map.get(i1, "created_at") <= Map.get(i2, "created_at") end)
   end
 
 end

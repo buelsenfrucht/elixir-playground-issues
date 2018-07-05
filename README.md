@@ -1,3 +1,5 @@
 # Issues
 
-Experimenting with Elixir
+Experimenting with Elixir.
+
+This project fetches issues from github projects and lists them.
